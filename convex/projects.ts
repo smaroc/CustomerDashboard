@@ -1,4 +1,5 @@
 import { mutation, query } from "./_generated/server";
+import { internal } from "./_generated/api";
 import { v } from "convex/values";
 
 export const list = query({
@@ -75,6 +76,17 @@ export const create = mutation({
       read: false,
       createdAt: Date.now(),
     });
+
+    // Send email to client
+    const client = await ctx.db.get(args.clientId);
+    if (client) {
+      await ctx.scheduler.runAfter(0, internal.authEmails.sendProjectAssignedEmail, {
+        email: client.email,
+        clientName: client.name,
+        projectName: args.name,
+        projectId: projectId,
+      });
+    }
 
     return projectId;
   },
@@ -172,6 +184,17 @@ export const addMember = mutation({
       read: false,
       createdAt: Date.now(),
     });
+
+    // Send email to client
+    const client = await ctx.db.get(args.userId);
+    if (client && project) {
+      await ctx.scheduler.runAfter(0, internal.authEmails.sendProjectAssignedEmail, {
+        email: client.email,
+        clientName: client.name,
+        projectName: project.name,
+        projectId: args.projectId,
+      });
+    }
   },
 });
 

@@ -54,6 +54,46 @@ export const sendSetupEmail = internalAction({
   },
 });
 
+export const sendProjectAssignedEmail = internalAction({
+  args: {
+    email: v.string(),
+    clientName: v.string(),
+    projectName: v.string(),
+    projectId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    console.log("[authEmails.sendProjectAssignedEmail] START for:", args.email, "project:", args.projectName);
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+    const apiKey = process.env.RESEND_API_KEY;
+    const emailFrom = process.env.EMAIL_FROM ?? "Dashboard <onboarding@resend.dev>";
+
+    console.log("[authEmails.sendProjectAssignedEmail] ENV check:");
+    console.log("  RESEND_API_KEY:", apiKey ? `set (${apiKey.slice(0, 8)}...)` : "NOT SET");
+
+    const link = `${appUrl}/client/projects/${args.projectId}`;
+    console.log("[authEmails.sendProjectAssignedEmail] Project link:", link);
+
+    try {
+      const resend = new Resend(apiKey);
+      const result = await resend.emails.send({
+        from: emailFrom,
+        to: [args.email],
+        subject: `Vous avez ete ajoute au projet "${args.projectName}"`,
+        html: emailTemplate(
+          `Nouveau projet : ${args.projectName}`,
+          `Bonjour ${args.clientName}, vous avez ete ajoute au projet "${args.projectName}". Cliquez ci-dessous pour y acceder.`,
+          link,
+          "Voir le projet",
+        ),
+      });
+      console.log("[authEmails.sendProjectAssignedEmail] Email sent! Result:", JSON.stringify(result));
+    } catch (e) {
+      console.error("[authEmails.sendProjectAssignedEmail] FAILED:", e);
+    }
+  },
+});
+
 function emailTemplate(title: string, body: string, link: string, cta: string) {
   return `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 560px; margin: 0 auto; padding: 40px 20px;">
