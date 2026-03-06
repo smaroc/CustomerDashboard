@@ -144,6 +144,54 @@ export const update = mutation({
   },
 });
 
+export const addMember = mutation({
+  args: {
+    projectId: v.id("projects"),
+    userId: v.id("users"),
+  },
+  handler: async (ctx, args) => {
+    // Check if already a member
+    const existing = await ctx.db
+      .query("projectMembers")
+      .withIndex("by_project", (q) => q.eq("projectId", args.projectId))
+      .collect();
+    if (existing.some((m) => m.userId === args.userId)) return;
+
+    await ctx.db.insert("projectMembers", {
+      projectId: args.projectId,
+      userId: args.userId,
+      joinedAt: Date.now(),
+    });
+
+    const project = await ctx.db.get(args.projectId);
+    await ctx.db.insert("notifications", {
+      userId: args.userId,
+      type: "invitation",
+      message: `Vous avez ete ajoute au projet "${project?.name}"`,
+      projectId: args.projectId,
+      read: false,
+      createdAt: Date.now(),
+    });
+  },
+});
+
+export const removeMember = mutation({
+  args: {
+    projectId: v.id("projects"),
+    userId: v.id("users"),
+  },
+  handler: async (ctx, args) => {
+    const memberships = await ctx.db
+      .query("projectMembers")
+      .withIndex("by_project", (q) => q.eq("projectId", args.projectId))
+      .collect();
+    const membership = memberships.find((m) => m.userId === args.userId);
+    if (membership) {
+      await ctx.db.delete(membership._id);
+    }
+  },
+});
+
 export const getMembers = query({
   args: { projectId: v.id("projects") },
   returns: v.any(),

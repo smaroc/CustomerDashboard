@@ -37,9 +37,12 @@ export default function ProjectDetailPage() {
   const stats = useQuery(api.projects.getStats, { projectId: projectId as Id<"projects"> });
   const tickets = useQuery(api.tickets.listByProject, { projectId: projectId as Id<"projects"> });
   const members = useQuery(api.projects.getMembers, { projectId: projectId as Id<"projects"> });
+  const clients = useQuery(api.users.listClients);
   const updateStatus = useMutation(api.tickets.updateStatus);
   const updateProject = useMutation(api.projects.update);
   const createTicket = useMutation(api.tickets.create);
+  const addMember = useMutation(api.projects.addMember);
+  const removeMember = useMutation(api.projects.removeMember);
 
   const [selectedTicket, setSelectedTicket] = useState<string | null>(null);
   const [comment, setComment] = useState("");
@@ -369,18 +372,53 @@ export default function ProjectDetailPage() {
                 ) : (
                   <div className="divide-y divide-slate-100">
                     {members.map((m) => m && (
-                      <div key={m._id} className="flex items-center gap-3 px-4 py-3">
+                      <div key={m._id} className="flex items-center gap-3 px-4 py-3 group">
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white text-[10px] font-bold shrink-0">
                           {m.name?.split(" ").map((w: string) => w[0]).join("").toUpperCase().slice(0, 2)}
                         </div>
-                        <div>
+                        <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-slate-900">{m.name}</p>
-                          <p className="text-xs text-slate-500">{m.email}</p>
+                          <p className="text-xs text-slate-500 truncate">{m.email}</p>
                         </div>
+                        <button
+                          onClick={() => removeMember({ projectId: projectId as Id<"projects">, userId: m._id })}
+                          className="w-7 h-7 flex items-center justify-center rounded-lg text-slate-300 hover:text-red-500 hover:bg-red-50 opacity-0 group-hover:opacity-100 cursor-pointer shrink-0"
+                          title="Retirer du projet"
+                        >
+                          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <path d="M4 4l8 8M12 4l-8 8" />
+                          </svg>
+                        </button>
                       </div>
                     ))}
                   </div>
                 )}
+
+                {/* Add client to project */}
+                {(() => {
+                  const memberIds = new Set(members?.map((m) => m?._id).filter(Boolean) ?? []);
+                  const available = clients?.filter((c) => !memberIds.has(c._id)) ?? [];
+                  if (!available.length) return null;
+                  return (
+                    <div className="p-3 border-t border-slate-100">
+                      <select
+                        defaultValue=""
+                        onChange={(e) => {
+                          if (e.target.value) {
+                            addMember({ projectId: projectId as Id<"projects">, userId: e.target.value as Id<"users"> });
+                            e.target.value = "";
+                          }
+                        }}
+                        className="w-full h-9 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:bg-white focus:border-teal-300 focus:ring-2 focus:ring-teal-100 focus:outline-none cursor-pointer"
+                      >
+                        <option value="">+ Ajouter un client...</option>
+                        {available.map((c) => (
+                          <option key={c._id} value={c._id}>{c.name}</option>
+                        ))}
+                      </select>
+                    </div>
+                  );
+                })()}
               </div>
             </>
           )}
