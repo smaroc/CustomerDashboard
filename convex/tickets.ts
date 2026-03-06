@@ -1,4 +1,5 @@
 import { mutation, query } from "./_generated/server";
+import { internal } from "./_generated/api";
 import { v } from "convex/values";
 
 export const listByProject = query({
@@ -117,6 +118,19 @@ export const create = mutation({
         read: false,
         createdAt: now,
       });
+
+      // Send email to admin
+      const admin = await ctx.db.get(project.adminId);
+      const creator = await ctx.db.get(args.createdBy);
+      if (admin && creator) {
+        await ctx.scheduler.runAfter(0, internal.authEmails.sendNewTicketEmail, {
+          adminEmail: admin.email,
+          clientName: creator.name,
+          ticketTitle: args.title,
+          projectName: project.name,
+          projectId: args.projectId,
+        });
+      }
     }
 
     return ticketId;

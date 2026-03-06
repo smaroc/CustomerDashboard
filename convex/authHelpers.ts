@@ -1,4 +1,5 @@
 import { internalMutation, internalQuery } from "./_generated/server";
+import { internal } from "./_generated/api";
 import { v } from "convex/values";
 
 export const getUserByEmail = internalQuery({
@@ -102,6 +103,7 @@ export const updatePassword = internalMutation({
     console.log("[authHelpers.updatePassword] Updating password for:", args.email);
 
     // Mark token as used
+    const tokenDoc = await ctx.db.get(args.tokenId);
     await ctx.db.patch(args.tokenId, { used: true });
     console.log("[authHelpers.updatePassword] Token marked as used:", args.tokenId);
 
@@ -114,6 +116,28 @@ export const updatePassword = internalMutation({
     if (user) {
       await ctx.db.patch(user._id, { passwordHash: args.passwordHash });
       console.log("[authHelpers.updatePassword] Password updated for user:", user._id);
+
+      // Notify admin when a client activates their account (setup token)
+      if (user.role === "client" && tokenDoc?.type === "setup") {
+        const admins = await ctx.db.query("users").collect();
+        for (const admin of admins.filter((u) => u.role === "admin")) {
+          await ctx.db.insert("notifications", {
+            userId: admin._id,
+            type: "invitation",
+            message: `${user.name} (${user.email}) a active son compte`,
+            read: false,
+            createdAt: Date.now(),
+          });
+          console.log("[authHelpers.updatePassword] Admin notified:", admin._id);
+
+          // Send email to admin
+          await ctx.scheduler.runAfter(0, internal.authEmails.sendAccountActivatedEmail, {
+            adminEmail: admin.email,
+            clientName: user.name,
+            clientEmail: user.email,
+          });
+        }
+      }
     } else {
       console.error("[authHelpers.updatePassword] USER NOT FOUND:", args.email);
     }

@@ -94,6 +94,78 @@ export const sendProjectAssignedEmail = internalAction({
   },
 });
 
+export const sendNewTicketEmail = internalAction({
+  args: {
+    adminEmail: v.string(),
+    clientName: v.string(),
+    ticketTitle: v.string(),
+    projectName: v.string(),
+    projectId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    console.log("[authEmails.sendNewTicketEmail] START for admin:", args.adminEmail, "ticket:", args.ticketTitle);
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+    const apiKey = process.env.RESEND_API_KEY;
+    const emailFrom = process.env.EMAIL_FROM ?? "Cuvra <onboarding@resend.dev>";
+
+    const link = `${appUrl}/dashboard/projects/${args.projectId}`;
+
+    try {
+      const resend = new Resend(apiKey);
+      const result = await resend.emails.send({
+        from: emailFrom,
+        to: [args.adminEmail],
+        subject: `Nouveau ticket de ${args.clientName} : "${args.ticketTitle}"`,
+        html: emailTemplate(
+          `Nouveau ticket sur ${args.projectName}`,
+          `${args.clientName} a cree un nouveau ticket : "${args.ticketTitle}". Cliquez ci-dessous pour le consulter.`,
+          link,
+          "Voir le ticket",
+        ),
+      });
+      console.log("[authEmails.sendNewTicketEmail] Email sent! Result:", JSON.stringify(result));
+    } catch (e) {
+      console.error("[authEmails.sendNewTicketEmail] FAILED:", e);
+    }
+  },
+});
+
+export const sendAccountActivatedEmail = internalAction({
+  args: {
+    adminEmail: v.string(),
+    clientName: v.string(),
+    clientEmail: v.string(),
+  },
+  handler: async (ctx, args) => {
+    console.log("[authEmails.sendAccountActivatedEmail] START for admin:", args.adminEmail);
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+    const apiKey = process.env.RESEND_API_KEY;
+    const emailFrom = process.env.EMAIL_FROM ?? "Cuvra <onboarding@resend.dev>";
+
+    const link = `${appUrl}/dashboard/clients`;
+
+    try {
+      const resend = new Resend(apiKey);
+      const result = await resend.emails.send({
+        from: emailFrom,
+        to: [args.adminEmail],
+        subject: `${args.clientName} a active son compte`,
+        html: emailTemplate(
+          "Compte client active",
+          `${args.clientName} (${args.clientEmail}) a active son compte et peut maintenant acceder a ses projets.`,
+          link,
+          "Voir les clients",
+        ),
+      });
+      console.log("[authEmails.sendAccountActivatedEmail] Email sent! Result:", JSON.stringify(result));
+    } catch (e) {
+      console.error("[authEmails.sendAccountActivatedEmail] FAILED:", e);
+    }
+  },
+});
+
 function emailTemplate(title: string, body: string, link: string, cta: string) {
   return `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 560px; margin: 0 auto; padding: 40px 20px;">
