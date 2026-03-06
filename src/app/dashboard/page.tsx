@@ -27,10 +27,10 @@ export default function DashboardOverview() {
     {
       label: "Projets",
       value: projects?.length ?? 0,
-      color: "from-indigo-500 to-indigo-600",
-      iconBg: "bg-indigo-100",
+      color: "from-teal-500 to-teal-600",
+      iconBg: "bg-teal-100",
       icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#6366f1" strokeWidth="1.5">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#0d9488" strokeWidth="1.5">
           <path d="M3 6A1.5 1.5 0 014.5 4.5H8l1.5 2h6A1.5 1.5 0 0117 8v7a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 013 15V6z" />
         </svg>
       ),
@@ -109,7 +109,7 @@ export default function DashboardOverview() {
           <h3 className="text-sm font-bold text-slate-900">Projets recents</h3>
           <Link
             href="/dashboard/projects"
-            className="text-xs text-indigo-600 hover:text-indigo-700 font-medium"
+            className="text-xs text-teal-600 hover:text-teal-700 font-medium"
           >
             Voir tout
           </Link>
@@ -134,11 +134,11 @@ export default function DashboardOverview() {
                   className="flex items-center justify-between px-5 py-4 hover:bg-slate-50/80 group"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-9 h-9 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-600 text-sm font-bold shrink-0">
+                    <div className="w-9 h-9 bg-teal-50 rounded-lg flex items-center justify-center text-teal-600 text-sm font-bold shrink-0">
                       {project.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-slate-900 group-hover:text-indigo-600">
+                      <p className="text-sm font-semibold text-slate-900 group-hover:text-teal-600">
                         {project.name}
                       </p>
                       <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">
@@ -192,7 +192,7 @@ export default function DashboardOverview() {
                       className={`w-2.5 h-2.5 rounded-full shrink-0 ring-2 ring-white ${priorityDots[ticket.priority]}`}
                     />
                     <div>
-                      <p className="text-sm text-slate-900 group-hover:text-indigo-600 font-medium">
+                      <p className="text-sm text-slate-900 group-hover:text-teal-600 font-medium">
                         {ticket.title}
                       </p>
                       <p className="text-xs text-slate-400 mt-0.5">

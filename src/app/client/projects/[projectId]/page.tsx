@@ -47,7 +47,7 @@ export default function ClientProjectPage() {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-teal-200 border-t-teal-600 rounded-full animate-spin" />
           <p className="text-sm text-slate-400">Chargement...</p>
         </div>
       </div>
@@ -68,7 +68,7 @@ export default function ClientProjectPage() {
 
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 text-lg font-bold shrink-0">
+          <div className="w-12 h-12 bg-teal-50 rounded-2xl flex items-center justify-center text-teal-600 text-lg font-bold shrink-0">
             {project.name.charAt(0).toUpperCase()}
           </div>
           <div>
@@ -78,7 +78,7 @@ export default function ClientProjectPage() {
         </div>
         <Link
           href={`/client/tickets/new?project=${projectId}`}
-          className="h-11 bg-indigo-600 text-white px-5 rounded-xl text-sm font-semibold hover:bg-indigo-700 active:scale-[0.98] shadow-sm shadow-indigo-200/50 flex items-center gap-2"
+          className="h-11 bg-teal-600 text-white px-5 rounded-xl text-sm font-semibold hover:bg-teal-700 active:scale-[0.98] shadow-sm shadow-teal-200/50 flex items-center gap-2"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d="M8 3v10M3 8h10" />
@@ -102,7 +102,7 @@ export default function ClientProjectPage() {
                 <p className="text-sm text-slate-400">Aucun ticket</p>
                 <Link
                   href={`/client/tickets/new?project=${projectId}`}
-                  className="text-xs text-indigo-600 font-medium hover:underline mt-1 inline-block"
+                  className="text-xs text-teal-600 font-medium hover:underline mt-1 inline-block"
                 >
                   Creer votre premier ticket
                 </Link>
@@ -114,7 +114,7 @@ export default function ClientProjectPage() {
                     key={ticket._id}
                     onClick={() => setSelectedTicket(ticket._id)}
                     className={`w-full text-left px-5 py-3.5 hover:bg-slate-50/80 cursor-pointer ${
-                      selectedTicket === ticket._id ? "bg-indigo-50/40 border-l-2 border-l-indigo-500" : ""
+                      selectedTicket === ticket._id ? "bg-teal-50/40 border-l-2 border-l-teal-500" : ""
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -155,7 +155,7 @@ export default function ClientProjectPage() {
                             href={file.url ?? "#"}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-xs text-indigo-600 hover:text-indigo-700 py-1 font-medium"
+                            className="flex items-center gap-2 text-xs text-teal-600 hover:text-teal-700 py-1 font-medium"
                           >
                             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
                               <path d="M9 2H4a1 1 0 00-1 1v10a1 1 0 001 1h8a1 1 0 001-1V6L9 2z" />
@@ -195,7 +195,7 @@ export default function ClientProjectPage() {
                         }
                       }}
                       placeholder="Ecrire un commentaire..."
-                      className="flex-1 h-9 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:bg-white focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 focus:outline-none"
+                      className="flex-1 h-9 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:bg-white focus:border-teal-300 focus:ring-2 focus:ring-teal-100 focus:outline-none"
                     />
                     <button
                       onClick={() => {
@@ -204,7 +204,7 @@ export default function ClientProjectPage() {
                           setComment("");
                         }
                       }}
-                      className="h-9 px-3 bg-indigo-600 text-white rounded-lg text-xs font-semibold hover:bg-indigo-700 cursor-pointer"
+                      className="h-9 px-3 bg-teal-600 text-white rounded-lg text-xs font-semibold hover:bg-teal-700 cursor-pointer"
                     >
                       Envoyer
                     </button>

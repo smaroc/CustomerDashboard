@@ -104,7 +104,7 @@ export default function NewTicketPage() {
             value={projectId}
             onChange={(e) => setProjectId(e.target.value)}
             required
-            className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none"
+            className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none"
           >
             <option value="">Selectionner un projet</option>
             {projects?.map((p) => p && (
@@ -120,7 +120,7 @@ export default function NewTicketPage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none"
+            className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none"
             placeholder="Resume de votre demande"
           />
         </div>
@@ -132,7 +132,7 @@ export default function NewTicketPage() {
             onChange={(e) => setDescription(e.target.value)}
             required
             rows={5}
-            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none resize-none leading-relaxed"
+            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none resize-none leading-relaxed"
             placeholder="Expliquez en detail ce que vous souhaitez..."
           />
         </div>
@@ -161,15 +161,15 @@ export default function NewTicketPage() {
           <label className="block text-sm font-semibold text-slate-700 mb-2">Pieces jointes</label>
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center cursor-pointer hover:border-indigo-300 hover:bg-indigo-50/30 group"
+            className="border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center cursor-pointer hover:border-teal-300 hover:bg-teal-50/30 group"
           >
-            <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-indigo-100">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-slate-400 group-hover:text-indigo-500">
+            <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-teal-100">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-slate-400 group-hover:text-teal-500">
                 <path d="M12 16V8M9 11l3-3 3 3" />
                 <path d="M20 16.7V19a2 2 0 01-2 2H6a2 2 0 01-2-2v-2.3" />
               </svg>
             </div>
-            <p className="text-sm font-medium text-slate-500 group-hover:text-indigo-600">
+            <p className="text-sm font-medium text-slate-500 group-hover:text-teal-600">
               Cliquez pour ajouter des fichiers
             </p>
             <p className="text-xs text-slate-400 mt-1">Images, PDF, documents</p>
@@ -190,8 +190,8 @@ export default function NewTicketPage() {
                   className="flex items-center justify-between bg-slate-50 rounded-xl px-4 py-2.5"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center shrink-0">
-                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#6366f1" strokeWidth="1.5">
+                    <div className="w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center shrink-0">
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#0d9488" strokeWidth="1.5">
                         <path d="M9 2H4a1 1 0 00-1 1v10a1 1 0 001 1h8a1 1 0 001-1V6L9 2z" />
                       </svg>
                     </div>
@@ -219,7 +219,7 @@ export default function NewTicketPage() {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full h-12 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100 shadow-sm shadow-indigo-200/50 cursor-pointer"
+          className="w-full h-12 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700 active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100 shadow-sm shadow-teal-200/50 cursor-pointer"
         >
           {submitting ? (
             <span className="flex items-center justify-center gap-2">

@@ -36,7 +36,7 @@ export function Sidebar() {
       {/* Brand — Serial Position: first item is most memorable */}
       <div className="p-5 pb-4">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shadow-sm shadow-indigo-200/50">
+          <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center shadow-sm shadow-teal-200/50">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
               <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
               <polyline points="9 22 9 12 15 12 15 22" />
@@ -66,7 +66,7 @@ export function Sidebar() {
               href={link.href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium ${
                 isActive
-                  ? "bg-indigo-50 text-indigo-700"
+                  ? "bg-teal-50 text-teal-700"
                   : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
               }`}
             >
@@ -80,7 +80,7 @@ export function Sidebar() {
       {/* User — Serial Position: last item is second most memorable */}
       <div className="p-3 border-t border-slate-100">
         <div className="flex items-center gap-3 px-3 py-2.5">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm">
             {initials || "?"}
           </div>
           <div className="min-w-0 flex-1">
@@ -106,7 +106,7 @@ export function Sidebar() {
 
 function GridIcon({ active }: { active?: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke={active ? "#4f46e5" : "currentColor"} strokeWidth="1.5" strokeLinecap="round">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke={active ? "#0f766e" : "currentColor"} strokeWidth="1.5" strokeLinecap="round">
       <rect x="2" y="2" width="5.5" height="5.5" rx="1.5" />
       <rect x="10.5" y="2" width="5.5" height="5.5" rx="1.5" />
       <rect x="2" y="10.5" width="5.5" height="5.5" rx="1.5" />
@@ -117,7 +117,7 @@ function GridIcon({ active }: { active?: boolean }) {
 
 function FolderIcon({ active }: { active?: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke={active ? "#4f46e5" : "currentColor"} strokeWidth="1.5" strokeLinecap="round">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke={active ? "#0f766e" : "currentColor"} strokeWidth="1.5" strokeLinecap="round">
       <path d="M2.5 5A1.5 1.5 0 014 3.5h3l1.5 2h5.5A1.5 1.5 0 0115.5 7v6a1.5 1.5 0 01-1.5 1.5H4A1.5 1.5 0 012.5 13V5z" />
     </svg>
   );
@@ -125,7 +125,7 @@ function FolderIcon({ active }: { active?: boolean }) {
 
 function UsersIcon({ active }: { active?: boolean }) {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke={active ? "#4f46e5" : "currentColor"} strokeWidth="1.5" strokeLinecap="round">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke={active ? "#0f766e" : "currentColor"} strokeWidth="1.5" strokeLinecap="round">
       <circle cx="7" cy="5.5" r="2.5" />
       <path d="M2.5 15c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5" />
       <circle cx="13" cy="6" r="1.5" />

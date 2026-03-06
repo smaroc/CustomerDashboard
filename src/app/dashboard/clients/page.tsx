@@ -51,7 +51,7 @@ export default function ClientsPage() {
         </div>
         <button
           onClick={() => setShowCreate(!showCreate)}
-          className="h-11 bg-indigo-600 text-white px-5 rounded-xl text-sm font-semibold hover:bg-indigo-700 active:scale-[0.98] shadow-sm shadow-indigo-200/50 flex items-center gap-2 cursor-pointer"
+          className="h-11 bg-teal-600 text-white px-5 rounded-xl text-sm font-semibold hover:bg-teal-700 active:scale-[0.98] shadow-sm shadow-teal-200/50 flex items-center gap-2 cursor-pointer"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d="M8 3v10M3 8h10" />
@@ -73,7 +73,7 @@ export default function ClientsPage() {
               onChange={(e) => setName(e.target.value)}
               required
               autoFocus
-              className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none"
+              className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none"
               placeholder="Nom complet du client"
             />
           </div>
@@ -84,7 +84,7 @@ export default function ClientsPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none"
+              className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none"
               placeholder="client@example.com"
             />
           </div>
@@ -103,7 +103,7 @@ export default function ClientsPage() {
             <button
               type="submit"
               disabled={creating}
-              className="h-11 bg-indigo-600 text-white px-6 rounded-xl text-sm font-semibold hover:bg-indigo-700 disabled:opacity-50 shadow-sm shadow-indigo-200/50 cursor-pointer"
+              className="h-11 bg-teal-600 text-white px-6 rounded-xl text-sm font-semibold hover:bg-teal-700 disabled:opacity-50 shadow-sm shadow-teal-200/50 cursor-pointer"
             >
               {creating ? "Creation..." : "Creer le client"}
             </button>
@@ -148,7 +148,7 @@ export default function ClientsPage() {
                   className="flex items-center justify-between px-5 py-4 group"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white text-xs font-bold shrink-0 shadow-sm">
                       {initials || "?"}
                     </div>
                     <div>
@@ -157,7 +157,7 @@ export default function ClientsPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[11px] px-2.5 py-1 rounded-lg font-semibold bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100">
+                    <span className="text-[11px] px-2.5 py-1 rounded-lg font-semibold bg-teal-50 text-teal-600 ring-1 ring-teal-100">
                       Client
                     </span>
                     {confirmDelete === client._id ? (

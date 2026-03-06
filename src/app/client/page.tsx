@@ -43,11 +43,11 @@ export default function ClientDashboard() {
                 className="flex items-center justify-between px-5 py-4 hover:bg-slate-50/80 group"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 text-sm font-bold shrink-0">
+                  <div className="w-10 h-10 bg-teal-50 rounded-xl flex items-center justify-center text-teal-600 text-sm font-bold shrink-0">
                     {project.name.charAt(0).toUpperCase()}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-slate-900 group-hover:text-indigo-600">
+                    <p className="text-sm font-semibold text-slate-900 group-hover:text-teal-600">
                       {project.name}
                     </p>
                     <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">
@@ -67,7 +67,7 @@ export default function ClientDashboard() {
                   >
                     {project.status === "active" ? "Actif" : project.status === "paused" ? "En pause" : "Termine"}
                   </span>
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-slate-300 group-hover:text-indigo-400">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-slate-300 group-hover:text-teal-400">
                     <path d="M6 4l4 4-4 4" />
                   </svg>
                 </div>

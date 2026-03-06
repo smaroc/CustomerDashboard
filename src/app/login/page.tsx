@@ -85,15 +85,15 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-indigo-50/30">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-teal-50/30">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-indigo-100/40 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-100/40 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-slate-100/60 rounded-full blur-3xl" />
       </div>
 
       <div className="w-full max-w-sm relative animate-in">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-indigo-600 rounded-2xl mb-4 shadow-lg shadow-indigo-200/50">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-teal-600 rounded-2xl mb-4 shadow-lg shadow-teal-200/50">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
               <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
               <polyline points="9 22 9 12 15 12 15 22" />
@@ -129,7 +129,7 @@ function LoginForm() {
                 autoFocus={!isAdminSetup}
                 autoComplete="email"
                 disabled={isAdminSetup}
-                className="w-full h-12 pl-10 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none disabled:opacity-60"
+                className="w-full h-12 pl-10 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none disabled:opacity-60"
                 placeholder="vous@example.com"
               />
             </div>
@@ -144,7 +144,7 @@ function LoginForm() {
               {!isAdminSetup && (
                 <Link
                   href="/forgot-password"
-                  className="text-xs text-indigo-600 hover:text-indigo-700 font-medium"
+                  className="text-xs text-teal-600 hover:text-teal-700 font-medium"
                 >
                   Mot de passe oublie ?
                 </Link>
@@ -165,7 +165,7 @@ function LoginForm() {
                 autoFocus={isAdminSetup}
                 minLength={isAdminSetup ? 8 : undefined}
                 autoComplete={isAdminSetup ? "new-password" : "current-password"}
-                className="w-full h-12 pl-10 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none"
+                className="w-full h-12 pl-10 pr-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none"
                 placeholder={isAdminSetup ? "Minimum 8 caracteres" : "Votre mot de passe"}
               />
             </div>
@@ -181,7 +181,7 @@ function LoginForm() {
                 onChange={(e) => { setConfirmPassword(e.target.value); setError(""); }}
                 required
                 autoComplete="new-password"
-                className="w-full h-12 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none"
+                className="w-full h-12 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none"
                 placeholder="Repeter le mot de passe"
               />
             </div>
@@ -200,7 +200,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full h-12 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100 shadow-sm shadow-indigo-200/50 cursor-pointer"
+            className="w-full h-12 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700 active:scale-[0.98] disabled:opacity-50 disabled:active:scale-100 shadow-sm shadow-teal-200/50 cursor-pointer"
           >
             {isSubmitting ? (
               <span className="flex items-center justify-center gap-2">

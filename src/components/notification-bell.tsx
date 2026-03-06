@@ -31,7 +31,7 @@ export function NotificationBell() {
         onClick={() => setOpen(!open)}
         className={`relative w-10 h-10 flex items-center justify-center rounded-xl cursor-pointer ${
           hasUnread
-            ? "bg-indigo-50 text-indigo-600"
+            ? "bg-teal-50 text-teal-600"
             : "hover:bg-slate-100 text-slate-500"
         }`}
       >
@@ -56,7 +56,7 @@ export function NotificationBell() {
               {hasUnread && (
                 <button
                   onClick={() => markAllAsRead({ userId: user._id })}
-                  className="text-xs text-indigo-600 hover:text-indigo-700 font-medium cursor-pointer"
+                  className="text-xs text-teal-600 hover:text-teal-700 font-medium cursor-pointer"
                 >
                   Tout marquer comme lu
                 </button>
@@ -81,12 +81,12 @@ export function NotificationBell() {
                         if (!n.read) markAsRead({ id: n._id });
                       }}
                       className={`w-full text-left px-5 py-3.5 hover:bg-slate-50 cursor-pointer ${
-                        !n.read ? "bg-indigo-50/40" : ""
+                        !n.read ? "bg-teal-50/40" : ""
                       }`}
                     >
                       <div className="flex items-start gap-3">
                         {!n.read && (
-                          <span className="w-2 h-2 bg-indigo-500 rounded-full shrink-0 mt-1.5" />
+                          <span className="w-2 h-2 bg-teal-500 rounded-full shrink-0 mt-1.5" />
                         )}
                         <div className={!n.read ? "" : "ml-5"}>
                           <p className="text-sm text-slate-700 leading-snug">{n.message}</p>

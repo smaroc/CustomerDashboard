@@ -51,7 +51,7 @@ export default function ProjectsPage() {
         </div>
         <button
           onClick={() => setShowCreate(!showCreate)}
-          className="h-11 bg-indigo-600 text-white px-5 rounded-xl text-sm font-semibold hover:bg-indigo-700 active:scale-[0.98] shadow-sm shadow-indigo-200/50 flex items-center gap-2 cursor-pointer"
+          className="h-11 bg-teal-600 text-white px-5 rounded-xl text-sm font-semibold hover:bg-teal-700 active:scale-[0.98] shadow-sm shadow-teal-200/50 flex items-center gap-2 cursor-pointer"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d="M8 3v10M3 8h10" />
@@ -71,7 +71,7 @@ export default function ProjectsPage() {
               value={clientId}
               onChange={(e) => setClientId(e.target.value)}
               required
-              className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none"
+              className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none"
             >
               <option value="">Selectionner un client</option>
               {clients?.map((c) => (
@@ -83,7 +83,7 @@ export default function ProjectsPage() {
             {clients && clients.length === 0 && (
               <p className="text-xs text-slate-400 mt-2">
                 Aucun client.{" "}
-                <Link href="/dashboard/clients" className="text-indigo-600 font-medium hover:underline">
+                <Link href="/dashboard/clients" className="text-teal-600 font-medium hover:underline">
                   Creer un client
                 </Link>
               </p>
@@ -96,7 +96,7 @@ export default function ProjectsPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none"
+              className="w-full h-11 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none"
               placeholder="ex: Refonte du site web"
             />
           </div>
@@ -107,7 +107,7 @@ export default function ProjectsPage() {
               onChange={(e) => setDescription(e.target.value)}
               required
               rows={3}
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none resize-none"
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none resize-none"
               placeholder="Breve description du projet"
             />
           </div>
@@ -115,7 +115,7 @@ export default function ProjectsPage() {
             <button
               type="submit"
               disabled={creating || !clientId}
-              className="h-11 bg-indigo-600 text-white px-6 rounded-xl text-sm font-semibold hover:bg-indigo-700 disabled:opacity-50 shadow-sm shadow-indigo-200/50 cursor-pointer"
+              className="h-11 bg-teal-600 text-white px-6 rounded-xl text-sm font-semibold hover:bg-teal-700 disabled:opacity-50 shadow-sm shadow-teal-200/50 cursor-pointer"
             >
               {creating ? "Creation..." : "Creer le projet"}
             </button>
@@ -149,11 +149,11 @@ export default function ProjectsPage() {
                   href={`/dashboard/projects/${project._id}`}
                   className="flex items-center gap-4 flex-1 min-w-0"
                 >
-                  <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 text-sm font-bold shrink-0">
+                  <div className="w-10 h-10 bg-teal-50 rounded-xl flex items-center justify-center text-teal-600 text-sm font-bold shrink-0">
                     {project.name.charAt(0).toUpperCase()}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-slate-900 group-hover:text-indigo-600">
+                    <p className="text-sm font-semibold text-slate-900 group-hover:text-teal-600">
                       {project.name}
                     </p>
                     <p className="text-xs text-slate-500 mt-0.5 truncate">

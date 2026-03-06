@@ -22,7 +22,7 @@ function ResetPasswordForm() {
 
   if (!token) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-indigo-50/30">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-teal-50/30">
         <div className="text-center animate-in">
           <div className="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2">
@@ -32,7 +32,7 @@ function ResetPasswordForm() {
           </div>
           <h2 className="text-lg font-bold text-slate-900">Lien invalide</h2>
           <p className="text-sm text-slate-500 mt-1">Ce lien de reinitialisation est invalide.</p>
-          <Link href="/forgot-password" className="inline-block mt-4 text-sm text-indigo-600 font-semibold hover:text-indigo-700">
+          <Link href="/forgot-password" className="inline-block mt-4 text-sm text-teal-600 font-semibold hover:text-teal-700">
             Demander un nouveau lien
           </Link>
         </div>
@@ -79,15 +79,15 @@ function ResetPasswordForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-indigo-50/30">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-teal-50/30">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-indigo-100/40 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-teal-100/40 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-slate-100/60 rounded-full blur-3xl" />
       </div>
 
       <div className="w-full max-w-sm relative animate-in">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-indigo-600 rounded-2xl mb-4 shadow-lg shadow-indigo-200/50">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-teal-600 rounded-2xl mb-4 shadow-lg shadow-teal-200/50">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
               <rect x="3" y="11" width="18" height="11" rx="3" />
               <path d="M7 11V7a5 5 0 0110 0v4" />
@@ -127,7 +127,7 @@ function ResetPasswordForm() {
                 minLength={8}
                 autoFocus
                 autoComplete="new-password"
-                className="w-full h-12 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none"
+                className="w-full h-12 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none"
                 placeholder="Minimum 8 caracteres"
               />
             </div>
@@ -140,7 +140,7 @@ function ResetPasswordForm() {
                 onChange={(e) => { setConfirm(e.target.value); setError(""); }}
                 required
                 autoComplete="new-password"
-                className="w-full h-12 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100 focus:outline-none"
+                className="w-full h-12 px-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-teal-300 focus:ring-4 focus:ring-teal-100 focus:outline-none"
                 placeholder="Repeter le mot de passe"
               />
             </div>
@@ -158,7 +158,7 @@ function ResetPasswordForm() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-12 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 active:scale-[0.98] disabled:opacity-50 shadow-sm shadow-indigo-200/50 cursor-pointer"
+              className="w-full h-12 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700 active:scale-[0.98] disabled:opacity-50 shadow-sm shadow-teal-200/50 cursor-pointer"
             >
               {isSubmitting ? (
                 <span className="flex items-center justify-center gap-2">
@@ -191,7 +191,7 @@ export default function ResetPasswordPage() {
       <AuthProvider>
         <Suspense fallback={
           <div className="min-h-screen flex items-center justify-center">
-            <div className="w-8 h-8 border-2 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-teal-200 border-t-teal-600 rounded-full animate-spin" />
           </div>
         }>
           <ResetPasswordForm />
