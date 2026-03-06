@@ -43,14 +43,25 @@ export const login = action({
   args: { email: v.string(), password: v.string() },
   handler: async (ctx, args): Promise<{ success: boolean; error?: string; user?: { _id: Id<"users">; name: string; email: string; role: string } }> => {
     const email = args.email.toLowerCase().trim();
+    console.log("[auth.login] Attempting login for:", email);
 
     const user = await ctx.runQuery(getUserByEmail, { email });
-    if (!user) return { success: false, error: "Email ou mot de passe incorrect." };
-    if (!user.passwordHash) return { success: false, error: "Mot de passe non configure. Verifiez vos emails." };
+    if (!user) {
+      console.log("[auth.login] User not found:", email);
+      return { success: false, error: "Email ou mot de passe incorrect." };
+    }
+    console.log("[auth.login] User found:", user._id, "role:", user.role, "hasPassword:", !!user.passwordHash);
+
+    if (!user.passwordHash) {
+      console.log("[auth.login] No password set for:", email);
+      return { success: false, error: "Mot de passe non configure. Verifiez vos emails." };
+    }
 
     const valid = await bcrypt.compare(args.password, user.passwordHash);
+    console.log("[auth.login] Password valid:", valid);
     if (!valid) return { success: false, error: "Email ou mot de passe incorrect." };
 
+    console.log("[auth.login] Login successful for:", email);
     return {
       success: true,
       user: { _id: user._id, name: user.name, email: user.email, role: user.role },
@@ -63,17 +74,20 @@ export const setupAdmin = action({
   args: { email: v.string(), password: v.string() },
   handler: async (ctx, args): Promise<{ success: boolean; error?: string; user?: { _id: Id<"users">; name: string; email: string; role: string } }> => {
     const email = args.email.toLowerCase().trim();
+    console.log("[auth.setupAdmin] Setting up admin:", email);
 
     if (args.password.length < 8) {
       return { success: false, error: "Le mot de passe doit contenir au moins 8 caracteres." };
     }
 
     const hash = await bcrypt.hash(args.password, 10);
+    console.log("[auth.setupAdmin] Password hashed");
 
     const userId = await ctx.runMutation(createAdmin, {
       email,
       passwordHash: hash,
     });
+    console.log("[auth.setupAdmin] Admin created/updated:", userId);
 
     return {
       success: true,
@@ -86,9 +100,14 @@ export const setupAdmin = action({
 export const checkAdminStatus = action({
   args: { email: v.string() },
   handler: async (ctx, args): Promise<{ exists: boolean; hasPassword: boolean }> => {
-    const user = await ctx.runQuery(getUserByEmail, { email: args.email.toLowerCase().trim() });
-    if (!user) return { exists: false, hasPassword: false };
-    return { exists: true, hasPassword: !!user.passwordHash };
+    const email = args.email.toLowerCase().trim();
+    console.log("[auth.checkAdminStatus] Checking:", email);
+    const user = await ctx.runQuery(getUserByEmail, { email });
+    const result = user
+      ? { exists: true, hasPassword: !!user.passwordHash }
+      : { exists: false, hasPassword: false };
+    console.log("[auth.checkAdminStatus] Result:", JSON.stringify(result));
+    return result;
   },
 });
 
@@ -96,8 +115,15 @@ export const checkAdminStatus = action({
 export const setPassword = action({
   args: { token: v.string(), password: v.string() },
   handler: async (ctx, args): Promise<{ success: boolean; error?: string; user?: { _id: Id<"users">; name: string; email: string; role: string } | null }> => {
+    console.log("[auth.setPassword] Token:", args.token.slice(0, 20) + "...");
+
     const tokenDoc = await ctx.runQuery(getPasswordToken, { token: args.token });
-    if (!tokenDoc) return { success: false, error: "Lien invalide ou expire." };
+    if (!tokenDoc) {
+      console.log("[auth.setPassword] Token not found");
+      return { success: false, error: "Lien invalide ou expire." };
+    }
+    console.log("[auth.setPassword] Token found for:", tokenDoc.email, "type:", tokenDoc.type, "used:", tokenDoc.used, "expires:", new Date(tokenDoc.expiresAt).toISOString());
+
     if (tokenDoc.used) return { success: false, error: "Ce lien a deja ete utilise." };
     if (tokenDoc.expiresAt < Date.now()) return { success: false, error: "Ce lien a expire." };
 
@@ -106,14 +132,17 @@ export const setPassword = action({
     }
 
     const hash = await bcrypt.hash(args.password, 10);
+    console.log("[auth.setPassword] Password hashed, updating for:", tokenDoc.email);
 
     await ctx.runMutation(updatePassword, {
       email: tokenDoc.email,
       passwordHash: hash,
       tokenId: tokenDoc._id,
     });
+    console.log("[auth.setPassword] Password updated");
 
     const user = await ctx.runQuery(getUserByEmail, { email: tokenDoc.email });
+    console.log("[auth.setPassword] User after update:", user ? user._id : "null");
 
     return {
       success: true,
@@ -127,11 +156,16 @@ export const requestPasswordReset = action({
   args: { email: v.string() },
   handler: async (ctx, args): Promise<{ success: boolean }> => {
     const email = args.email.toLowerCase().trim();
-    const user = await ctx.runQuery(getUserByEmail, { email });
+    console.log("[auth.requestPasswordReset] Request for:", email);
 
-    if (!user) return { success: true };
+    const user = await ctx.runQuery(getUserByEmail, { email });
+    if (!user) {
+      console.log("[auth.requestPasswordReset] User not found, returning success anyway");
+      return { success: true };
+    }
 
     const token = crypto.randomUUID() + "-" + Date.now().toString(36);
+    console.log("[auth.requestPasswordReset] Token created:", token.slice(0, 20) + "...");
 
     await ctx.runMutation(createPasswordToken, {
       email,
@@ -141,10 +175,18 @@ export const requestPasswordReset = action({
     });
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+    const apiKey = process.env.RESEND_API_KEY;
+    const emailFrom = process.env.EMAIL_FROM ?? "Dashboard <onboarding@resend.dev>";
+
+    console.log("[auth.requestPasswordReset] ENV check:");
+    console.log("  NEXT_PUBLIC_APP_URL:", appUrl);
+    console.log("  RESEND_API_KEY:", apiKey ? `set (${apiKey.slice(0, 8)}...)` : "NOT SET");
+    console.log("  EMAIL_FROM:", emailFrom);
+
     try {
-      const resend = new Resend(process.env.RESEND_API_KEY);
-      await resend.emails.send({
-        from: process.env.EMAIL_FROM ?? "Dashboard <onboarding@resend.dev>",
+      const resend = new Resend(apiKey);
+      const result = await resend.emails.send({
+        from: emailFrom,
         to: [email],
         subject: "Reinitialisation de votre mot de passe",
         html: emailTemplate(
@@ -154,8 +196,9 @@ export const requestPasswordReset = action({
           "Reinitialiser le mot de passe",
         ),
       });
-    } catch {
-      console.warn("Failed to send reset email");
+      console.log("[auth.requestPasswordReset] Email sent! Result:", JSON.stringify(result));
+    } catch (e) {
+      console.error("[auth.requestPasswordReset] FAILED to send email:", e);
     }
 
     return { success: true };

@@ -8,7 +8,10 @@ import { Resend } from "resend";
 export const sendSetupEmail = internalAction({
   args: { email: v.string(), name: v.string() },
   handler: async (ctx, args) => {
+    console.log("[authEmails.sendSetupEmail] START for:", args.email, args.name);
+
     const token = crypto.randomUUID() + "-" + Date.now().toString(36);
+    console.log("[authEmails.sendSetupEmail] Generated token:", token.slice(0, 20) + "...");
 
     await ctx.runMutation(internal.authHelpers.createPasswordToken, {
       email: args.email,
@@ -16,23 +19,37 @@ export const sendSetupEmail = internalAction({
       type: "setup",
       expiresAt: Date.now() + 7 * 24 * 60 * 60 * 1000,
     });
+    console.log("[authEmails.sendSetupEmail] Token saved to DB");
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+    const apiKey = process.env.RESEND_API_KEY;
+    const emailFrom = process.env.EMAIL_FROM ?? "Dashboard <onboarding@resend.dev>";
+
+    console.log("[authEmails.sendSetupEmail] ENV check:");
+    console.log("  NEXT_PUBLIC_APP_URL:", appUrl);
+    console.log("  RESEND_API_KEY:", apiKey ? `set (${apiKey.slice(0, 8)}...)` : "NOT SET");
+    console.log("  EMAIL_FROM:", emailFrom);
+
+    const link = `${appUrl}/set-password?token=${token}`;
+    console.log("[authEmails.sendSetupEmail] Password link:", link);
+
     try {
-      const resend = new Resend(process.env.RESEND_API_KEY);
-      await resend.emails.send({
-        from: process.env.EMAIL_FROM ?? "Dashboard <onboarding@resend.dev>",
+      const resend = new Resend(apiKey);
+      console.log("[authEmails.sendSetupEmail] Sending email to:", args.email);
+      const result = await resend.emails.send({
+        from: emailFrom,
         to: [args.email],
         subject: "Bienvenue - Configurez votre mot de passe",
         html: emailTemplate(
           `Bienvenue ${args.name}`,
           `Un compte a ete cree pour vous. Cliquez ci-dessous pour definir votre mot de passe et acceder a votre espace client.`,
-          `${appUrl}/set-password?token=${token}`,
+          link,
           "Configurer mon mot de passe",
         ),
       });
+      console.log("[authEmails.sendSetupEmail] Email sent! Result:", JSON.stringify(result));
     } catch (e) {
-      console.warn("Failed to send setup email:", e);
+      console.error("[authEmails.sendSetupEmail] FAILED to send email:", e);
     }
   },
 });
