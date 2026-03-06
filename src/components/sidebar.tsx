@@ -37,13 +37,10 @@ export function Sidebar() {
       <div className="p-5 pb-4">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center shadow-sm shadow-teal-200/50">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
+            <span className="text-white text-sm font-bold">C</span>
           </div>
           <div>
-            <h1 className="text-sm font-bold text-slate-900 tracking-tight">Dashboard</h1>
+            <h1 className="text-sm font-bold text-slate-900 tracking-tight">Cuvra</h1>
             <p className="text-[11px] text-slate-400 font-medium">
               {isAdmin ? "Administration" : "Espace client"}
             </p>

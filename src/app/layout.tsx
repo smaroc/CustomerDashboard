@@ -14,8 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Customer Dashboard",
-  description: "Manage projects and client tickets",
+  title: "Cuvra Dashboard",
+  description: "Gestion de projets et suivi client",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

@@ -176,7 +176,7 @@ export const requestPasswordReset = action({
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
     const apiKey = process.env.RESEND_API_KEY;
-    const emailFrom = process.env.EMAIL_FROM ?? "Dashboard <onboarding@resend.dev>";
+    const emailFrom = process.env.EMAIL_FROM ?? "Cuvra <onboarding@resend.dev>";
 
     console.log("[auth.requestPasswordReset] ENV check:");
     console.log("  NEXT_PUBLIC_APP_URL:", appUrl);
